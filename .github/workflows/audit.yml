@@ -1,5 +1,5 @@
 # Déclarer le nom du workflow
-name: premier workflow
+name: audit workflow
 
 # L'événement qui déclenche le workflow
 on:
@@ -8,12 +8,12 @@ on:
             - main
 # Les différents jobs du workflow
 jobs:
-    premier-job:
+    audit:
         runs-on: ubuntu-latest
         steps:
             - name: Récupérer le code
               uses: actions/checkout@v7
-            - name: Lister le contenu du répertoire
+            - name: Faire l'audit du répertoire
               run: |
-                  echo "Contenu du répertoire :"
+                  echo "Audit du répertoire :"
                   ls -la
