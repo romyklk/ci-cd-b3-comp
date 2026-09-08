@@ -13,6 +13,19 @@ jobs:
         if: ${{ github.event.workflow_run.conclusion == 'success' }}
         runs-on: ubuntu-latest
         steps:
-            - name: Déployer
-              run: echo "Déploiement en cours..."
+            - name: Déployer sur l'environnement de production
+              uses: appleboy/ssh-action@v1
+              with:
+                  host: ${{ secrets.SSH_HOST }}
+                  username: ${{ secrets.SSH_USER }}
+                  port: ${{ secrets.SSH_PORT }}
+                  key: ${{ secrets.SSH_PRIVATE_KEY }}
+                  script: |
+                      if [ -d ~/app/.git ]; then
+                          cd ~/app
+                          git pull origin main
+                      else
+                          git clone ${{ github.server_url}}/${{ github.repository }} ~/app
+                      fi
+                      echo "Déploiement terminé."
 
