@@ -24,7 +24,7 @@ jobs:
             - name: Installer PHP
               uses: shivammathur/setup-php@v2
               with:
-                  php-version: '7.4'
+                  php-version: "8.5"
                   extensions: mbstring, intl
 
             - name: Mise en cache
@@ -37,3 +37,5 @@ jobs:
 
             - name: Installer les dépendances Composer
               run: composer install --no-progress  --prefer-dist
+            - name: Lancer l'audit de sécurité
+              run: composer audit --no-interaction
