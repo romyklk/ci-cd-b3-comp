@@ -1,3 +1,5 @@
+[![audit du code](https://github.com/romyklk/ci-cd-b3-comp/actions/workflows/audit.yml/badge.svg)](https://github.com/romyklk/ci-cd-b3-comp/actions/workflows/audit.yml)
+
 # Pratiquons CI/CD
 
 ## Description du projet
