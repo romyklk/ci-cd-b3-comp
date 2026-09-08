@@ -1,0 +1,18 @@
+name: Déploiement
+
+on:
+    workflow_run:
+        workflows:
+            - qualité du code et tests
+        types:
+            - completed
+        branches:
+            - main
+jobs:
+    deploy:
+        if: ${{ github.event.workflow_run.conclusion == 'success' }}
+        runs-on: ubuntu-latest
+        steps:
+            - name: Déployer
+              run: echo "Déploiement en cours..."
+
