@@ -1,12 +1,14 @@
-# Déclarer le nom du workflow
-name: audit workflow
+name: audit du code
 
-# L'événement qui déclenche le workflow
 on:
     push:
         branches:
             - main
-# Les différents jobs du workflow
+            - develop
+    pull_request:
+        branches:
+            - develop
+
 jobs:
     audit:
         runs-on: ubuntu-latest
