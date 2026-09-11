@@ -17,4 +17,10 @@ jobs:
             - name: Déployer sur l'environnement preprod
               run: echo "Déploiement sur l'environnement preprod"
 
-            
+    production:
+        needs: staging
+        runs-on: ubuntu-latest
+        environment: prod
+        steps:
+            - name: Déployer sur l'environnement production
+              run: echo "Déploiement sur l'environnement production"
