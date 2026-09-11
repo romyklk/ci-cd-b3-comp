@@ -10,11 +10,3 @@ jobs:
             - name: Déployer sur
               run: echo "Déploiement sur l'environnement develop"
 
-
-    production:
-        needs: dev
-        runs-on: ubuntu-latest
-        environment: production
-        steps:
-            - name: Déployer sur l'environnement production
-              run: echo "Déploiement sur l'environnement production"
