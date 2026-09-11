@@ -2,7 +2,7 @@ name: Build Docker Image
 on:
     push:
         branches:
-            - main
+            - develop
 jobs:
     build:
         runs-on: ubuntu-latest
@@ -21,3 +21,6 @@ jobs:
                 push: true
                 tags: ${{ vars.DOCKERHUB_USERNAME }}/sym-app:latest
 
+
+
+                
