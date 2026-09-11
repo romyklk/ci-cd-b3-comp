@@ -51,6 +51,8 @@ jobs:
               run: composer install --no-progress  --prefer-dist
 
             - name: Créer la base de données
+              env:
+                DATABASE_URL: "mysql://root:testpass@127.0.0.1:3306/testdb"
               run: |
                   php bin/console doctrine:database:create --if-not-exists --no-interaction
                   php bin/console doctrine:schema:update --force --no-interaction
