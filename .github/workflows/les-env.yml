@@ -1,26 +1,63 @@
 name: Les Environnements
 on: [push]
 
-
 jobs:
     dev:
         runs-on: ubuntu-latest
-        environment:  develop
+        environment: develop
         steps:
-            - name: Déployer sur
-              run: echo "Déploiement sur l'environnement develop"
+            - name: Déploiement via ssh
+              uses: appleboy/ssh-action@v1
+              with:
+                  host: ${{ secrets.SSH_HOST }}
+                  username: ${{ secrets.SSH_USER }}
+                  key: ${{ secrets.SSH_PRIVATE_KEY }}
+                  port: ${{ secrets.SSH_PORT }}
+                  script: |
+                      if [ -d ~/devapp/.git ]; then
+                         cd ~/devapp
+                         git pull
+                      else
+                         git clone ${{ github.server_url}}/${{ github.repository }} ~/devapp
+                      fi
+
     staging:
         needs: dev
         runs-on: ubuntu-latest
         environment: stage
         steps:
-            - name: Déployer sur l'environnement preprod
-              run: echo "Déploiement sur l'environnement preprod"
+            - name: Déploiement via ssh
+              uses: appleboy/ssh-action@v1
+              with:
+                  host: ${{ secrets.SSH_HOST }}
+                  username: ${{ secrets.SSH_USER }}
+                  key: ${{ secrets.SSH_PRIVATE_KEY }}
+                  port: ${{ secrets.SSH_PORT }}
+                  script: |
+                      if [ -d ~/stagingapp/.git ]; then
+                         cd ~/stagingapp
+                         git pull
+                      else
+                         git clone ${{ github.server_url}}/${{ github.repository }} ~/stagingapp
+                      fi
+
 
     production:
         needs: staging
         runs-on: ubuntu-latest
         environment: prod
         steps:
-            - name: Déployer sur l'environnement production
-              run: echo "Déploiement sur l'environnement production"
+            - name: Déploiement via ssh
+              uses: appleboy/ssh-action@v1
+              with:
+                  host: ${{ secrets.SSH_HOST }}
+                  username: ${{ secrets.SSH_USER }}
+                  key: ${{ secrets.SSH_PRIVATE_KEY }}
+                  port: ${{ secrets.SSH_PORT }}
+                  script: |
+                      if [ -d ~/prodapp/.git ]; then
+                         cd ~/prodapp
+                         git pull
+                      else
+                         git clone ${{ github.server_url}}/${{ github.repository }} ~/prodapp
+                      fi
