@@ -1,0 +1,12 @@
+.git
+.github
+.phpunit.cache
+var
+vendor
+node_modules
+tests
+exercices
+data/*.sqlite
+.env.local
+.env.*.local
+*.md

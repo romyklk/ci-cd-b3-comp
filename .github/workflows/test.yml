@@ -1,0 +1,63 @@
+name: test integration
+
+on:
+    push:
+        branches:
+            - main
+            - develop
+    pull_request:
+        branches:
+            - develop
+
+jobs:
+    tests:
+        runs-on: ubuntu-latest
+        services:
+          mysql:
+              image: mysql:8
+              env:
+                  MYSQL_ROOT_PASSWORD: testpass
+                  MYSQL_DATABASE: testdb
+              ports:
+                  - 3306:3306
+              options: >-
+                  --health-cmd="mysqladmin ping"
+                  --health-interval=10s
+                  --health-timeout=5s
+                  --health-retries=5
+        steps:
+            - name: Récupérer le code
+              uses: actions/checkout@v7
+            - name: Récupérer le chemin du cache composer
+              id: composer-cache
+              run: |
+                  echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+            - name: Installer PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: "8.5"
+                  extensions: mbstring, intl
+
+            - name: Mise en cache
+              uses: actions/cache@v6
+              with:
+                  path: ${{ steps.composer-cache.outputs.dir }}
+                  key: ${{ runner.os}}-composer-${{ hashFiles('**/composer.lock') }}
+                  restore-keys: |
+                      ${{ runner.os}}-composer-
+
+            - name: Installer les dépendances Composer
+              run: composer install --no-progress  --prefer-dist
+
+            - name: Créer la base de données
+              run: |
+                  php bin/console doctrine:database:create --if-not-exists --no-interaction
+                  php bin/console doctrine:schema:update --force --no-interaction
+
+            - name: Charger les fixtures
+              run: php bin/console doctrine:fixtures:load --no-interaction
+
+
+            - name: Lancer les tests
+              run: php bin/phpunit
