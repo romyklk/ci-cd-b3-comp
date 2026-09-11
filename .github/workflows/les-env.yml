@@ -1,0 +1,26 @@
+name: Les Environnements
+on: [push]
+
+
+jobs:
+    dev:
+        runs-on: ubuntu-latest
+        environment:  develop
+        steps:
+            - name: Déployer sur l'environnement develop
+              run: echo "Déploiement sur l'environnement develop"
+
+    staging:
+        runs-on: ubuntu-latest
+        environment:  staging
+        steps:
+            - name: Déployer sur l'environnement staging
+              run: echo "Déploiement sur l'environnement staging"
+
+    production:
+        runs-on: ubuntu-latest
+        environment:  prod
+        steps:
+            - name: Déployer sur l'environnement production
+              run: echo "Déploiement sur l'environnement production"
+
