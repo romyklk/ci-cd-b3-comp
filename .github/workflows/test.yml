@@ -17,7 +17,7 @@ jobs:
               image: mysql:8
               env:
                   MYSQL_ROOT_PASSWORD: testpass
-                  MYSQL_DATABASE: testdb
+                  MYSQL_DATABASE: testdb2
               ports:
                   - 3306:3306
               options: >-
@@ -52,7 +52,7 @@ jobs:
 
             - name: Créer la base de données
               env:
-                DATABASE_URL: "mysql://root:testpass@127.0.0.1:3306/testdb"
+                DATABASE_URL: "mysql://root:testpass@127.0.0.1:3306/testdb2"
               run: |
                   php bin/console doctrine:database:create --if-not-exists --no-interaction
                   php bin/console doctrine:schema:update --force --no-interaction
