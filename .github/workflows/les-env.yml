@@ -7,7 +7,7 @@ jobs:
         runs-on: ubuntu-latest
         environment:  develop
         steps:
-            - name: Déployer sur l'environnement develop
+            - name: Déployer sur 
               run: echo "Déploiement sur l'environnement develop"
 
     staging:
