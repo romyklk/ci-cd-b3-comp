@@ -7,10 +7,11 @@ jobs:
         runs-on: ubuntu-latest
         environment:  develop
         steps:
-            - name: Déployer sur 
+            - name: Déployer sur
               run: echo "Déploiement sur l'environnement develop"
 
     staging:
+        needs: dev
         runs-on: ubuntu-latest
         environment:  staging
         steps:
@@ -18,6 +19,7 @@ jobs:
               run: echo "Déploiement sur l'environnement staging"
 
     production:
+        needs: staging
         runs-on: ubuntu-latest
         environment:  prod
         steps:
